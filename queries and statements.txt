@@ -1,0 +1,159 @@
+Run the sqlserver with this command:
+
+"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe" "--defaults-file=C:\ProgramData\MySQL\MySQL Server 8.0\my.ini"
+
+mysql> Create Database BidvestBank;
+
+mysql> use BidvestBank;
+Database changed
+mysql> create Table CustomerAccount(
+    -> account_number char(10) not null primary key,
+    -> branch_name varchar(20),
+    ->  balance double
+    ->  );
+
+mysql> insert into CustomerAccount( account_number, branch_name, balance)
+    -> VALUES
+    -> ('A-5324', 'Newtown', 500),
+    -> ('A-5624', 'Sunnyside', 400),
+    -> ('A-7794', 'Midrand', 900),
+    -> ('A-4467', 'Mabopane', 700),
+    -> ('A-3548', 'Midrand', 750),
+    -> ('A-3453', 'Universitas', 700),
+    -> ('A-2542', 'Mamelodi', 350);
+select * from CustomerAccount;
+
+mysql> create Table BankBranch(
+    -> branch_name varchar(20) not null primary key,
+    -> branch_city varchar(20),
+    -> assets double
+    -> );
+
+mysql> insert into BankBranch( branch_name,branch_city,assets)
+    -> VALUES
+    -> ('Midrand', 'Johannesburg', 7100000),
+    -> ('Newtown', 'Johannesburg', 9000000),
+    -> ('Mabopane', 'Pretoria ', 400000) ,
+    -> ('Belgravia', 'Kimberly', 3700000),
+    -> ('Sunnyside ', 'Pretoria', 1700000),
+    -> ('Amanzimtoti', 'Durban', 300000),
+    -> ('Universitas', 'Bloemfontein', 210000),
+    -> ( 'Mamelodi', 'Pretoria', 8000000);
+
+select * from BankBranch;
+
+
+mysql> create Table Customer(
+    -> customer_name varchar(20) not null primary key,
+    -> customer_street varchar(20),
+    -> customer_city varchar(20)
+    -> );
+
+mysql> insert into Customer(customer_name,customer_street,customer_city)
+    -> VALUES
+    -> (' Modise', 'Spring', 'Gearge'),
+    -> ('Brooks', 'Senator', 'Johannesburg'),
+    -> ('Jooste ', 'North ', 'Kimberly'),
+    -> ('Lombard', 'Sand Hiu', 'Nelspruit'),
+    ->  (' Mokwena', 'Walnut', 'Port-Elizabeth '),
+    -> (' Johnson', 'Mmabatho', 'Mafikeng'),
+    ->  (' Johnson', 'Alma', 'Bloemfontein' ),
+    -> (' Zwane', 'Main', 'Mafikeng' ),
+    -> ('Lindsay', 'Park', 'George' ),
+    ->  (' Smith', 'North', 'Kimberly '),
+    ->  ('Dlamini', 'Putnam', 'Port-Elizabeth'),
+    ->  ('Williams', 'Nassau', 'Giyane');
+
+select * from Customer;
+
+mysql> create Table Depositor(
+    -> customer_name varchar(20),
+    ->  account_number char(20) not null primary key
+    -> );
+
+
+mysql> insert into Depositor(customer_name,account_number)
+    -> VALUES
+    -> ('Johnson', 'A-5624'),
+    -> ('Johnson', 'A-5664'),
+    -> ('Johnson ', 'A-7794'),
+    -> ('Zwane', 'A-3546' ),
+    -> ('Lindsay', 'A-3453' ),
+    -> ('Smith', 'A-4467'),
+    -> ('Dlamini', 'A-2542');
+
+select * from Depositor;
+
+
+mysql> create Table Loan(
+    -> loan_number char(20) not null primary key,
+    -> branch_name varchar(20),
+    -> amount double
+    -> );
+
+
+mysql> insert into Loan(loan_number, branch_name, amount)
+    -> VALUES
+    -> ('L-11', 'Mamelodi ', 900),
+    -> ('L-14', 'Newtown', 1500),
+    -> ('L-15', 'Sunnyside ', 1500),
+    -> ('L-16', 'Sunnyside', 1300),
+    -> ('L-17', 'Newtown' ,1000),
+    -> ('L-23', 'Universitas ', 2000),
+    -> (' L-93', 'Mabopane', 500);
+
+select * from Loan;
+
+mysql> create Table Borrower(
+    -> customer_name varchar(20),
+    -> loan_number char(20) not null primary key
+    -> );
+mysql> insert into Borrower(customer_name, loan_number)
+    ->  VALUES
+    -> ('Modise', 'L-16'),
+    ->  ('Jooste', 'L-93' ),
+    -> ('Johnson', 'L-15' ),
+    -> ('Jackson', 'L-14'),
+    -> ('Zwane', 'L-17' ),
+    ->  ( 'Smith', 'L-11'),
+    -> ('Smith', 'L-23 '),
+    -> ('Williams', 'L-18');
+
+select * from Borrower;
+
+mysql> create Table Employee(
+    -> employee_name varchar(20) not null primary key,
+    -> branch_name char(20),
+    -> salary double
+    -> );
+
+
+mysql> insert into Employee(employee_name, branch_name, salary)
+    -> VALUES
+    -> ('Modise', 'Sunnyside', 1500),
+    -> ('Brown ', 'Sunnyside', 1300),
+    -> (' Gopal', 'Sunnyside ', 5300),
+    -> ('Johnson', 'Newtown', 1500),
+    -> ('Loreena', 'Newtown', 1300),
+    -> ('Peterson ', 'Newtown', 2500),
+    -> ('Rao', 'Austin', 1500),
+    -> ('Sato', 'Austin', 1600);
+
+select * from Employee;
+
+
+QUERY STATEMENTS FOR QUESTIONS ASKED:
+
+4. i) mysql> select * from CustomerAccount where balance < 700;
+  ii) mysql> select * from Customer where customer_city = 'Johannesburg';
+ iii) mysql> select * from Employee where salary > 1500 and not branch_name = 'Newtown';
+  iv) mysql> select employee_name, AVG(salary) AS "avg-salary" From Employee Group By employee_name;
+      mysql> select AVG(salary) AS "avg-salary" from Employee;
+   v) mysql> select MAX(Assets) AS "Maximum Balance" from BankBranch;
+
+5. i) mysql> select * from Employee where branch_name = 'Sunnyside';
+  ii) mysql> select * from Borrower;
+ iii) mysql> select * from CustomerAccount where balance > 900;
+  iv) mysql> select * from CustomerAccount where Branch_name = 'Newtown'and balance > 600;
+   v) mysql> select branch_name , assets from BankBranch; 
+                                                                                                        
